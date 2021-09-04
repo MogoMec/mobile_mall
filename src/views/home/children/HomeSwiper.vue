@@ -17,7 +17,6 @@
 <script>
 import Swiper from '@/components/common/swiper/Swiper.vue'
 export default {
-  name: 'ContinuePlayItem',
   props: ['banners'],
   data() {
     return {
