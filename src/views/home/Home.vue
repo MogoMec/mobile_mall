@@ -6,7 +6,7 @@
     <scroll
       class="scroll"
       ref="scroll"
-      :probe-type="3"
+      :probeType="3"
       :pullUpLoad="true"
       @scroll="contentsScroll"
       @pullingUp="loadmore"
@@ -22,6 +22,7 @@
       ></tab-control>
       <goods :goods="Goods[currentGoodsType].list" whichgoods="home"></goods>
     </scroll>
+    <back-top @click.native="backToTop" v-show="isBackTopShow"></back-top>
   </div>
 </template>
 <script>
@@ -34,6 +35,7 @@ import WeekHot from './children/WeekHot.vue'
 import TabControl from '../../components/content/tabcontrol/TabControl.vue'
 import Goods from '../../components/content/goods/Goods.vue'
 import Scroll from '../../components/common/scroll/Scroll.vue'
+import BackTop from '../../components/content/backtop/BackTop.vue'
 export default {
   data() {
     return {
@@ -45,7 +47,7 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentGoodsType: 'pop',
-      backUp_isShow: false, //判断是否显示backup
+      isBackTopShow: false, //判断是否显示backup
       tabcontrolTop: 0, //记录tabcontrol离顶部的距离
       isTabShow: false //判断tabcontrol是否吸顶
     }
@@ -57,7 +59,8 @@ export default {
     WeekHot,
     TabControl,
     Goods,
-    Scroll
+    Scroll,
+    BackTop
   },
   methods: {
     //获取Home页面数据
@@ -85,7 +88,7 @@ export default {
     //判断backtop的显示和隐藏
     contentsScroll(position) {
       //判断返回顶部按钮的隐藏和出现
-      this.backUp_isShow = -position.y > 1000
+      this.isBackTopShow = -position.y > 1000
       //判断tabcontrol是否吸顶
       this.isTabShow = -position.y > this.tabcontrolTop
     },
@@ -93,6 +96,11 @@ export default {
     loadmore() {
       this.getHomeGoods(this.currentGoodsType)
       this.$refs.scroll.scroll.finishPullUp()
+    },
+    //返回顶部
+    backToTop() {
+      //使用BScroll内部函数
+      this.$refs.scroll.scroll.scrollTo(0, 0, 500)
     }
   },
   created() {
