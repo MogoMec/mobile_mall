@@ -1,12 +1,7 @@
 <template>
   <div class="goodsitem" @click="goodsitemClick">
     <div class="img">
-      <img
-        :src="whichgoods === 'home' ? goodsitems.show.img : goodsitems.image"
-        alt=""
-        class="goods-img"
-        @load="Imghasload"
-      />
+      <img v-lazy="goodsImg" alt="" class="goods-img" @load="Imghasload" />
     </div>
 
     <div class="info">
@@ -19,7 +14,6 @@
 
 <script>
 export default {
-  name: 'GoodItem',
   props: ['goodsitems', 'whichgoods'],
   methods: {
     Imghasload() {
@@ -31,6 +25,14 @@ export default {
     },
     goodsitemClick() {
       this.$router.push('/detail/' + this.goodsitems.iid)
+    }
+  },
+  computed: {
+    goodsImg() {
+      if (this.whichgoods === 'home') {
+        return this.goodsitems.show.img
+      }
+      return this.goodsitems.image
     }
   }
 }
