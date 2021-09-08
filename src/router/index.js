@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 //路由懒加载
 const Home = () => import('@/views/home/Home.vue')
-const Classifi = () => import('@/views/classifi/Classifi.vue')
 const Shopcart = () => import('@/views/shopcart/Shopcart.vue')
 const Personal = () => import('@/views/personal/Personal.vue')
 const Detail = () => import('@/views/detail/Detail.vue')
@@ -17,10 +16,6 @@ const routes = [
   {
     path: '/home',
     component: Home
-  },
-  {
-    path: '/classifi',
-    component: Classifi
   },
   {
     path: '/shopcart',

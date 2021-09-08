@@ -1,6 +1,6 @@
-import {request} from "./request";
+import { request } from './request'
 
-export function GetDetailDate(iid) {
+export function GetDetailData(iid) {
   return request({
     url: '/detail',
     params: {
@@ -9,7 +9,7 @@ export function GetDetailDate(iid) {
   })
 }
 
-export function GetCommend() {
+export function GetRecommend() {
   return request({
     url: '/recommend'
   })
