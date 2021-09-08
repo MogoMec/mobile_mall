@@ -9,15 +9,6 @@
       />
       <div slot="text">首页</div>
     </TabbarItem>
-    <TabbarItem path="/classifi">
-      <img src="@/assets/img/tabbar/classifi.png" alt="" slot="icon" />
-      <img
-        src="@/assets/img/tabbar/classifi_active.png"
-        alt=""
-        slot="icon-active"
-      />
-      <div slot="text">分类</div>
-    </TabbarItem>
     <TabbarItem path="/shopcart">
       <img src="@/assets/img/tabbar/shopcart.png" alt="" slot="icon" />
       <img

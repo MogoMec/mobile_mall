@@ -3,6 +3,14 @@
     <nav-bar>
       <div slot="center">首页</div>
     </nav-bar>
+    <!-- 吸顶用tab -->
+    <tab-control
+      :controlItems="['流行', '新款', '精选']"
+      @tabControlClick="getGoodsType"
+      class="fixed"
+      ref="tabcontrolFade"
+      v-show="isTabShow"
+    ></tab-control>
     <scroll
       class="scroll"
       ref="scroll"
@@ -15,7 +23,6 @@
       <recommends :recommends="recommends"></recommends>
       <week-hot></week-hot>
       <tab-control
-        class="sticky"
         :controlItems="['流行', '新款', '精选']"
         @tabControlClick="getGoodsType"
         ref="tabcontrol"
@@ -36,6 +43,8 @@ import TabControl from '../../components/content/tabcontrol/TabControl.vue'
 import Goods from '../../components/content/goods/Goods.vue'
 import Scroll from '../../components/common/scroll/Scroll.vue'
 import BackTop from '../../components/content/backtop/BackTop.vue'
+
+// import { itemListenerMixin } from '@/common/mixin.js'
 export default {
   data() {
     return {
@@ -52,6 +61,7 @@ export default {
       isTabShow: false //判断tabcontrol是否吸顶
     }
   },
+  // mixins: [itemListenerMixin],
   components: {
     NavBar,
     HomeSwiper,
@@ -102,12 +112,34 @@ export default {
       //使用BScroll内部函数
       this.$refs.scroll.scroll.scrollTo(0, 0, 500)
     }
+    // debounce(fn, delay) {
+    //   let timer = null
+    //   return function(...args) {
+    //     timer && clearTimeout(timer)
+    //     timer = setTimeout(() => {
+    //       console.log('防抖')
+    //       fn.apply(this, args)
+    //     }, delay)
+    //   }
+    // }
   },
   created() {
     this.getHomeData()
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+  },
+  mounted() {
+    //防抖
+    // const refresh = this.debounce(this.$refs.scroll.scroll.refresh, 500)
+    //图片加载完成进行BScroll高度计算
+    this.$bus.$on('Imghasload', () => {
+      this.$refs.scroll.scroll.refresh()
+    })
+    //在事件总线监听轮播图图片是否加载完成
+    this.$bus.$on('playimaload', () => {
+      this.tabcontrolTop = this.$refs.tabcontrol.$el.offsetTop
+    })
   }
 }
 </script>
@@ -134,5 +166,11 @@ export default {
   left: 0;
   top: 44px;
   bottom: 49px;
+}
+.fixed {
+  position: fixed;
+  top: 43px;
+  right: 0;
+  left: 0;
 }
 </style>
